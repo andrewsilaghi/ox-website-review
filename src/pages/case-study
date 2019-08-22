@@ -1,0 +1,17 @@
+import React from "react"
+import { Link } from "gatsby"
+import 'bootstrap/dist/css/bootstrap.css'
+// import Header from "../components/header"
+import Banner from "../components/video-ban"
+import CaseStudy from "../components/case-studies"
+import MediumPosts from "../components/mediumItem"
+import logo from '../../static/img/ox-logo-lg.png'
+import logodark from '../../static/img/ox-logo-dark.png'
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import client1 from '../../static/img/clients/nat-geo.png'
+import Carousel from 'react-bootstrap/Carousel'
+
+
+
+
+export default () => ()
