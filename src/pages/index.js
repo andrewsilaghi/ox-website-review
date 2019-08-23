@@ -11,10 +11,10 @@ import OxIntro from "../components/ox-intro"
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import client1 from '../../static/img/clients/nat-geo.png'
 import Carousel from 'react-bootstrap/Carousel'
-import { window, document, exists } from 'browser-monads';
 
 
 export default ({data}) => (
+  
     <div>
     <NavBar></NavBar>
 <VideoBanner videoBanner={data.homePageAcf.acf.video_banner_img.localFile.url} videoUrl={data.homePageAcf.acf.video_banner_url}></VideoBanner>
