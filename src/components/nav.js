@@ -35,6 +35,8 @@ class NavBar extends Component {
   </div>
     )
     }
+    return null
+
 }
 }
 
