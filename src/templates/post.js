@@ -29,12 +29,13 @@ const customStyles = {
 
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
 
-  if (typeof window !== undefined) {
-  console.log(`Location: ${window.location.href}`);
-}
+
 class PostTemplate extends Component {
   
-  componentDidMount() {
+  componentDidMount() {  
+    if (typeof window !== undefined) {
+    console.log(`Location: ${window.location.href}`);
+  }
     
     Modal.setAppElement(document.getElementById('yourAppElement'))
     }
