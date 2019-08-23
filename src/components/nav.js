@@ -22,8 +22,7 @@ class NavBar extends Component {
     }
   }
   render(){    
-    if (typeof window !== 'undefined') {
-
+    
     return (
       <div>
   <nav id="nav" className="navbar navbar-expand navbar-dark flex-column flex-md-row fixed-top why-u-no-work" >
@@ -34,9 +33,6 @@ class NavBar extends Component {
   <HamburgerMenu></HamburgerMenu>
   </div>
     )
-    }
-    return null
-
 }
 }
 
