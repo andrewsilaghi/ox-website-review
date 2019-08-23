@@ -99,10 +99,7 @@ html {
     font-size: 3em;
   }
   
-  .ox-intro__heading{
-    font-size:3.8em;
-    letter-spacing: 1px;
-  }
+ 
 
 
   /* ABOUT PAGE */
@@ -131,9 +128,7 @@ html {
   .case-study__info{
     padding: 0px 5% !important;
   }
-  .case-study__text{
-    font-size: 4em;
-  }
+
   .case-study--padded{
     padding: 8% 0 8% 0;
   }
@@ -185,6 +180,13 @@ html {
   }
   
   @media (min-width: 768px){
+    .ox-intro__heading{
+      font-size:3.8em;
+      letter-spacing: 1px;
+    }
+    .case-study__text{
+      font-size: 4em;
+    }
     .case-studies__card{
     border: #fff solid 45px;
     }
@@ -402,6 +404,7 @@ hr.white{
 }
 .footer__social-strip > a > svg{
   padding:3px !important;
+  width:30px;
 }
 /* Individual item */
 .bm-item {

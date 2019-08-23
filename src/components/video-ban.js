@@ -1,7 +1,7 @@
 import React,{Component} from "react"
 import 'bootstrap/dist/css/bootstrap.css'
 import Modal from 'react-modal';
-
+import { window, document, exists } from 'browser-monads';
 
 const customStyles = {
     content : {

@@ -5,7 +5,8 @@
  */
 const path = require('path');
 
-module.exports = {   
+module.exports = { 
+  pathPrefix: "/ox-website-review",  
   plugins: [{
     resolve: "gatsby-source-wordpress",
     options: {

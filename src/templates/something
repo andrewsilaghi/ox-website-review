@@ -1,0 +1,94 @@
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { graphql } from "gatsby"
+
+class PostsTemplate extends Component {
+    render() {
+        const data = this.props.data
+
+        return(
+            <div>
+                <h1>Posts</h1>
+
+                
+
+        {data.acf &&
+          data.acf.portfolio_page_building_blocks_post &&
+          data.acf.portfolio_page_building_blocks_post.map((layout, i) => {
+            if (layout.__typename === `on WordPressAcf_gallery`) {
+              return (
+                <div key={`${i} image-gallery`}>
+                  <h2>ACF Image Gallery</h2>
+                  {layout.pictures.map(({ picture }) => {
+                    return (
+                    <div></div>
+                    )
+                  })}
+                </div>
+              )
+            }
+            if (layout.__typename === `WordPressAcf_pull_quote`) {
+              return (
+                  <h2>ACF Post Photo</h2>
+              )
+            }
+            return null
+          })}
+
+            </div>
+        )
+    }
+}
+
+PostsTemplate.propTypes = {
+    data: PropTypes.object.isRequired,
+    edges: PropTypes.array,
+}
+
+export default PostsTemplate
+
+export const pageQuery = graphql`
+  query($id: String!) {
+    wordpressPost(id: { eq: $id }) {
+      title
+      content
+      acf {
+        portfolio_page_building_blocks_post {
+            __typename
+          ... on WordPressAcf_gallery {
+            id
+          }
+          ... on WordPressAcf_pull_quote {
+            id
+          }
+        }
+      }
+    }
+  }
+`\
+
+
+
+
+
+
+                  {layout.image_sliding_carousel.map(() => {
+                 
+                  })}
+
+
+
+
+                  .headshot.map(({ localFile }) => {
+                      const img = localFile.url
+                      return (
+                        <div>
+                          <img
+                            className="h-100 w-100"
+                            src={img}
+                           
+                          />
+                          <p></p>
+                        </div>                
+                      )
+                    })}

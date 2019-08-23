@@ -10,8 +10,7 @@ import Carousel from 'react-bootstrap/Carousel'
 import Footer from "../components/footer"
 import {Button, ButtonToolbar,Jumbotron } from "react-bootstrap"
 import Modal from 'react-modal';
-
-
+import { window, document, exists } from 'browser-monads';
 
 
 
@@ -98,7 +97,7 @@ class PostTemplate extends Component {
                   <div className="bg-black">
                   <div className="container py-5">
                   <h1 className="serif font-weight-bold text-center py-5 text-white">Our Team</h1>
-                  <div className="row">
+                  <div className="row px-5">
 
                     {layout.person.map(item => (
                       <div className="col-md-3 my-4">
