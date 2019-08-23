@@ -10,7 +10,6 @@ import Carousel from 'react-bootstrap/Carousel'
 import Footer from "../components/footer"
 import {Button, ButtonToolbar,Jumbotron } from "react-bootstrap"
 import Modal from 'react-modal';
-import { window, document, exists } from 'browser-monads';
 
 
 
@@ -29,11 +28,12 @@ const customStyles = {
 };
 
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement(document.getElementById('yourAppElement'))
 
   
 class PostTemplate extends Component {
-
+  componentDidMount() {
+    Modal.setAppElement(document.getElementById('yourAppElement'))
+    }
   constructor() {
     super();
 
@@ -67,7 +67,7 @@ class PostTemplate extends Component {
       <div>
 
       <Nav color={'bg-black'}></Nav>
-      <Header headerTitle="Core Unites ipsum tempor amd consectetur sit." headerSubTitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et." bg={post.featured_media.localFile.url}></Header>
+      <Header headerTitle="Core Unites ipsum tempor amd consectetur sita." headerSubTitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et." bg={post.featured_media.localFile.url}></Header>
       
         {post.acf &&
           post.acf.portfolio_page_building_blocks_post &&
