@@ -1,6 +1,10 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
 import 'bootstrap/dist/css/bootstrap.css'
+if (typeof window !== 'undefined') {
+  window.jQuery = window.$ = require('jquery');
+  require('bootstrap');
+}
 // import Header from "../components/header"
 import Banner from "../components/video-ban"
 import CaseStudy from "../components/case-studies"
