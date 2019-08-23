@@ -33,7 +33,7 @@ const customStyles = {
 class PostTemplate extends Component {
   
   componentDidMount() {  
-    if (typeof window !== undefined) {
+    if (typeof window !== 'undefined') {
     console.log(`Location: ${window.location.href}`);
   }
     
