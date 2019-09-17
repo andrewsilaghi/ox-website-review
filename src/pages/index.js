@@ -128,7 +128,7 @@ export default ({data}) => (
 export const pageQuery = graphql`
 
   query postsQueryHomePage {
-    postsQuery:   allWordpressPost(filter: {categories: {elemMatch: {name: {eq: "case-study"}}}}) {
+    postsQuery:   allWordpressPost(filter: {categories: {elemMatch: {name: {eq: "case-study"}}}}, sort: {order: DESC, fields: date}) {
         edges {
           node {
             slug

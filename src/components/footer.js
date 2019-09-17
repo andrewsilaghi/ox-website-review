@@ -64,7 +64,7 @@ export default () => (
   </div>
   </div>
   <div className="col-md-4">
-  <button className="cta__button mx-4"> <a href="https://oxcreates.typeform.com/to/M4cMBe" target="_blank">Learn More</a> </button>
+  <button className="cta__button mx-4"> <a href="https://oxcreates.typeform.com/to/M4cMBe" target="_blank">Contact Us</a> </button>
   </div>
   </div>
   </div>

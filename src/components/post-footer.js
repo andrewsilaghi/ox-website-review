@@ -10,7 +10,7 @@ import { Link } from "gatsby";
 library.add(fab);
 
 
-export default ({nextCaseStudyPic, nextCaseStudyTitle, nextCaseStudyDesc, nextPostLink }) => (
+export default ({nextCaseStudyPic, nextCaseStudyTitle, nextCaseStudyDesc, nextCaseStudyUrl }) => (
 <div>
   <section className="testimonials py-5">
   <div className="container">
@@ -59,19 +59,19 @@ export default ({nextCaseStudyPic, nextCaseStudyTitle, nextCaseStudyDesc, nextPo
   <div className="container-fluid">
   <div className="row cta__next-containers">
   <div className="col-md-4 cta__next-exerpt d-flex  align-items-center">
+  <Link to={nextCaseStudyUrl}>
   <div className="mx-auto px-5 py-3">
-  <a href={nextPostLink} target="_blank">
   <h3 className="text-white font-weight-bold  cta__next-exerpt__heading">{nextCaseStudyTitle}</h3>
   <p className="text-white font-weight-medium">{nextCaseStudyDesc}</p>
-  </a>
   </div>
+  </Link>
   </div>
   <div className="col-md-4 cta__next-img"  style={{background: "url(" + nextCaseStudyPic + ")"+ "no-repeat center center" }}></div>
   <div className="col-md-4">
   <div className="d-flex flex-column justify-content-start cta__text-container">
   <div className="my-auto">
   <h1 className="serif font-weight-bold text-white cta__heading cta__heading--alternate">Let's get to<br/> work, together!</h1>
-  <button className="cta__button"> <a href="https://oxcreates.typeform.com/to/M4cMBe" target="_blank">Learn More</a> </button>
+  <button className="cta__button"> <a href="https://oxcreates.typeform.com/to/M4cMBe" target="_blank">Contact Us</a> </button>
   </div>
   </div>
   </div>

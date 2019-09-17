@@ -16,16 +16,15 @@ import Modal from 'react-modal';
 
 class PostTemplate extends Component {
   state = { showing: false };
-
   render() {
     const post = this.props.data.currentPost
     const { showing } = this.state;
 
 
     return (
+ 
 
       <div>
-
       <Nav color={'bg-black'}></Nav>
       <Header headerTitle={post.acf.header_title} headerSubTitle={post.acf.header_body} bg={post.acf.header_background.localFile.url}></Header>
       
@@ -100,9 +99,9 @@ class PostTemplate extends Component {
           }
 
             if (layout.__typename === `WordPressAcf_full_width_banner`) {
-              const fullWidthBanner = layout.full_width_banner_img.localFile.url
+              const fullWidthBanner = layout.full_width_banner_img.localFile.childImageSharp.fluid
               return (
-                <img className="case-study__banner" src={fullWidthBanner}/>
+                <Img fluid={fullWidthBanner} />
               )
             }
             if (layout.__typename === `WordPressAcf_full_width_video`) {
@@ -152,8 +151,11 @@ class PostTemplate extends Component {
               const nextCaseStudyPic = layout.next_post_img.localFile.url
               const nextCaseStudyDesc = layout.next_post_brief
               const nextCaseStudyTitle =  layout.next_post_title
+              const nextCaseStudyLink =  layout.next_post_link
+
+
               return (
-                <PostFooter nextCaseStudyPic={nextCaseStudyPic} nextCaseStudyTitle={nextCaseStudyTitle} nextCaseStudyDesc={nextCaseStudyDesc}></PostFooter>
+                <PostFooter nextCaseStudyPic={nextCaseStudyPic} nextCaseStudyTitle={nextCaseStudyTitle} nextCaseStudyDesc={nextCaseStudyDesc} nextCaseStudyUrl={nextCaseStudyLink}></PostFooter>
                 )
           }
 
@@ -194,9 +196,9 @@ query($id: String!) {
     title
     content
 
-    featured_media {
-      localFile {
-        url
+    featured_media{
+      localFile{
+         url
       }
     }
     acf {
@@ -266,21 +268,20 @@ query($id: String!) {
             image_sliding_carousel {
               localFile {
                 url
-                childImageSharp {
-                  fluid(maxWidth: 400, maxHeight: 250) {
-                    ...GatsbyImageSharpFluid
-                  }
-                }
               }
             }
           }
           ... on WordPressAcf_full_width_banner {
             full_width_banner_img {
               localFile {
-                url
+                childImageSharp {
+                    fluid(maxWidth: 1920) {
+                        ...GatsbyImageSharpFluid_withWebp
+                      }
+                  }
+                }
               }
             }
-          }
           ... on WordPressAcf_full_width_video {
             full_width_video_banner_url
             full_width_video_banner_jpg {
@@ -294,6 +295,7 @@ query($id: String!) {
             id
             next_post_brief
             next_post_title
+            next_post_link
             next_post_img {
               localFile {
                 url
