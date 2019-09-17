@@ -24,7 +24,7 @@ const customStyles = {
   library.add(fas);
 
 
-class VideoBanner extends Component {
+class HomeVideoBanner extends Component {
     constructor() {
         super();
     
@@ -53,12 +53,28 @@ class VideoBanner extends Component {
     
         return (
             <div>
-            <div className="video-banner">
-              <img className="video-banner-bg" src={this.props.videoBanner} alt="Snow"/>
+
+
+              <div className="jumbotron jumbotron-fluid d-flex align-content-end webkit-flex flex-wrap header" style={{background: `url(${this.props.videoBanner}) no-repeat center center`}}>
+              <div className="container mb-5">
+              <div className="row">
+                <div className="text-white">
+                <div className="col-md-12">
+                <div className="row">
+                  <h1 className="col-md-8 text-white py-4 font-weight-bold header__title">{this.props.videoHeaderTitle}</h1>
+                  </div>
+                  </div>
+                </div>
+                </div>
+              <div className="row">
+              <div className="col-md-12">
               <button className="open-modal btn-outlined" onClick={this.openModal}>
               <a className="text-white">WATCH VIDEO <FontAwesomeIcon icon={['fas', 'caret-right']} size="1x" color="#ffffff" /></a>
               </button>
+                </div>
+                </div>
               </div>
+            </div>
             
               <Modal
                 isOpen={this.state.modalIsOpen}
@@ -78,31 +94,4 @@ class VideoBanner extends Component {
         )}
 }
   
-  export default VideoBanner
-
-
-
-
-
-
-
-//   <div className="jumbotron jumbotron-fluid d-flex align-content-end webkit-flex flex-wrap header" style={{backgroundImage: `url(${this.props.videoBanner})`}}>
-//   <div className="container mb-5">
-//   <div className="row">
-//     <div className="text-white">
-//     <div className="col-md-12">
-//     <div className="row">
-//       <h1 className="col-md-8 text-white py-4 font-weight-bold header__title">{this.props.videoHeaderTitle} Test lorem ipsum istodor</h1>
-//       </div>
-//       </div>
-//     </div>
-//     </div>
-//   <div className="row">
-//   <div className="col-md-12">
-//   <button className="open-modal btn-outlined" onClick={this.openModal}>
-//   <a className="text-white">WATCH VIDEO &#9654;</a>
-//   </button>
-//     </div>
-//     </div>
-//   </div>
-// </div>
+  export default HomeVideoBanner

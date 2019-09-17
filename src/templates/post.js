@@ -7,64 +7,19 @@ import Header from "../components/header"
 import CaseStudyBrief from "../components/case-study-brief"
 import PullQuote from "../components/pull-quote"
 import Carousel from 'react-bootstrap/Carousel'
-import Footer from "../components/footer"
+import VideoBanner from '../components/video-ban';
+import PaddedImage from '../components/padded-image';
+import PostFooter from "../components/post-footer"
 import {Button, ButtonToolbar,Jumbotron } from "react-bootstrap"
+import 'bootstrap/dist/css/bootstrap.css'
 import Modal from 'react-modal';
 
-
-
-
-
-const customStyles = {
-  content : {
-    top                   : '50%',
-    width                 : '100%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
-
-// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
-
-
 class PostTemplate extends Component {
-  
-  componentDidMount() {  
-    if (typeof window !== 'undefined') {
-    console.log(`Location: ${window.location.href}`);
-  }
-    
-    Modal.setAppElement(document.getElementById('yourAppElement'))
-    }
-  constructor() {
-    super();
+  state = { showing: false };
 
-    this.state = {
-      modalIsOpen: false
-    };
-
-    this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-  }
-
-  openModal() {
-    this.setState({modalIsOpen: true});
-  }
-
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-  }
-
-  closeModal() {
-    this.setState({modalIsOpen: false});
-  }
-  
   render() {
-    const post = this.props.data.wordpressPost
+    const post = this.props.data.currentPost
+    const { showing } = this.state;
 
 
     return (
@@ -72,7 +27,7 @@ class PostTemplate extends Component {
       <div>
 
       <Nav color={'bg-black'}></Nav>
-      <Header headerTitle="Core Unites ipsum tempor amd consectetur sita." headerSubTitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et." bg={post.featured_media.localFile.url}></Header>
+      <Header headerTitle={post.acf.header_title} headerSubTitle={post.acf.header_body} bg={post.acf.header_background.localFile.url}></Header>
       
         {post.acf &&
           post.acf.portfolio_page_building_blocks_post &&
@@ -110,7 +65,7 @@ class PostTemplate extends Component {
                       <img className="card-img" src={item.headshot.localFile.url}/>
                       <div className="card-img-overlay d-flex flex-column justify-content-end">
                       <h5 className="card-title serif bold"> {item.name}</h5>
-                      <p className="card-text person__title">Project Manager</p>
+                      <p className="card-text person__title">{item.position}</p>
                     </div>
                              
 
@@ -126,8 +81,9 @@ class PostTemplate extends Component {
               const PullQuoteText = layout.pull_quote_text
               const bgColor =  layout.pull_quote_bg_color
               const fontColor =  layout.pull_quote_text_color
+              const pullQuoteTitle =  layout.pull_quote_title
               return (
-                <PullQuote quote={PullQuoteText} pqBgColor={bgColor} textColor={fontColor}></PullQuote>
+                <PullQuote quote={PullQuoteText} pqBgColor={bgColor} textColor={fontColor} quoteTitle={pullQuoteTitle}></PullQuote>
               )
             }
             if (layout.__typename === `WordPressAcf_portfolio_brief`){
@@ -137,8 +93,9 @@ class PostTemplate extends Component {
               const caseStudySideLeft = layout.brief_side_text_left
               const caseStudyTextColor = layout.brief_text_color
               const caseStudyBgColor = layout.brief_bg_color
+              const services = layout.services_list
               return (
-            <CaseStudyBrief title={caseStudyTitle} exerpt={caseStudyInfo} bgColor={caseStudyBgColor} rightSideText={caseStudySideRight} leftSideText={caseStudySideLeft} textColor={caseStudyTextColor}></CaseStudyBrief>
+              <CaseStudyBrief title={caseStudyTitle} exerpt={caseStudyInfo} bgColor={caseStudyBgColor} rightSideText={caseStudySideRight} leftSideText={caseStudySideLeft} textColor={caseStudyTextColor} servicesList={services}></CaseStudyBrief>
             )
           }
 
@@ -151,69 +108,62 @@ class PostTemplate extends Component {
             if (layout.__typename === `WordPressAcf_full_width_video`) {
               const videoBanner = layout.full_width_video_banner_jpg.localFile.url
               const videoUrl = layout.full_width_video_banner_url
-              return (
-                <div>
-                <div className="video-banner">
-                  <img className="video-banner-bg" src={videoBanner} alt="Snow"/>
-                  <button className="open-modal" onClick={this.openModal}>
-                  <div className="d-flex flex-row align-items-center">
-                    <div class="style__VideoIconWrapper-sc-1jcsfwo-8 eTmNXU">
-                    <svg className="style__VideoIcon-sc-1jcsfwo-9 ihnEFr" viewBox="0 0 6 8">
-                      <path
-                        fillRule="evenodd"
-                        d="M5.92 3.843c.13.087.128.229 0 .314L.235 7.975C.104 8.06 0 8.015 0 7.857V.143C0-.009.107-.06.234.025L5.92 3.843z"
-                      />
-                    </svg>
-                    </div>
-                    <a className="font-weight-bold video-banner__btn-text">WATCH VIDEO</a>
-                    </div>
-                  </button>
-                  </div>
-                
-                  <Modal
-                    isOpen={this.state.modalIsOpen}
-                    onAfterOpen={this.afterOpenModal}
-                    onRequestClose={this.closeModal}
-                    style={customStyles}
-                    contentLabel="Example Modal"
-                    >
-                    <div className="container-fluid">
-                    <button className="close-module" onClick={this.closeModal}></button>
-                    <div class="embed-responsive embed-responsive-21by9">
-                      <iframe class="embed-responsive-item" src={videoUrl}></iframe>
-                    </div>
-                    </div>
-                  </Modal>
-          </div>
+              return(
+                <VideoBanner videoBanner={videoBanner} videoUrl={videoUrl}></VideoBanner>
               )
             }
             if (layout.__typename === `WordPressAcf_padded_image`) {
+              const caseStudyLeft = layout.brief_side_text_left
               const paddedImages = layout.padded_image_png.localFile.url
               const bgColor =  layout.padded_image_background_color
+              const paddedUrl = layout.padded_image_link
               return (
-                <div style={{backgroundColor: bgColor }}>
-                <div className="container padded-pic">
-                <img className="col-md-12" src={paddedImages}/>
-                </div>
-                </div>
+                <PaddedImage caseStudyLeft={caseStudyLeft} paddedUrl={paddedUrl} bgColor={bgColor} paddedImages={paddedImages}></PaddedImage>                
               )
             }
 
+              if (layout.__typename === `WordPressAcf_video_grid`) {
+
+                return (
+                  <section>
+                  <div className="container d-flex align-items-center">
+                  <h4 className="my-0 watch-film__button-text">WATCH FILMS</h4> <button className="video-grid__arrow-btn d-flex align-items-center" onClick={() => this.setState({ showing: !showing })}><i class="video-grid__arrow video-grid__down video-grid__arrow-i"></i></button>
+                  </div>
+                  <div className="container-fluid mb-5 pb-5">
+                  { showing 
+                    ? <div className="row px-2">
+                    {layout.video_grid_core.map(item => (
+                      <div className="col-md-6 my-4 video-grid__cover">
+                        <VideoBanner  videoBanner={item.video_banner.localFile.url} videoUrl={item.video_url}></VideoBanner>
+                          <div className="">
+                            <h5 className="video-grid__title bold"> {item.video_heading}</h5>
+                            <p className="video-grid__text" dangerouslySetInnerHTML={{ __html: item.video_text}}></p>
+                          </div>                      
+                      </div>
+                  ))}
+                  </div>
+                    : null
+                  }
+                  </div>
+                  </section>
+                )
+            }
+            if (layout.__typename === `WordPressAcf_next_post`) {
+              const nextCaseStudyPic = layout.next_post_img.localFile.url
+              const nextCaseStudyDesc = layout.next_post_brief
+              const nextCaseStudyTitle =  layout.next_post_title
+              return (
+                <PostFooter nextCaseStudyPic={nextCaseStudyPic} nextCaseStudyTitle={nextCaseStudyTitle} nextCaseStudyDesc={nextCaseStudyDesc}></PostFooter>
+                )
+          }
 
             return null
           })}
-          <div className="container-fluid">
-          <div className="row bg-grey text-white">
-          <div className="col-md-6 px-0"><img className="next-post-img" src="https://i.imgur.com/JaDLbfk.png" /></div>
-          <div className="col-md-6 py-5 px-5 d-flex align-items-center"><div><h1 className="serif mb-4">Next Project</h1> <hr className="next-project-break"/> <p className="mt-4">Text on why they should check out the very next project. Text would go right here. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></div></div>
-          </div>
-          </div>
           
 
 
 
 
-          <Footer></Footer>
 
 
 
@@ -232,16 +182,31 @@ export default PostTemplate
 
 export const pageQuery = graphql`
 query($id: String!) {
-  wordpressPost(id: { eq: $id }) {
+  nextPost:   allWordpressPost(filter: {categories: {elemMatch: {name: {eq: "case-study"}}}}) {
+    edges {
+      next{
+        title
+      }
+    }
+  }
+
+  currentPost: wordpressPost(id: { eq: $id }) {
     title
     content
+
     featured_media {
       localFile {
         url
       }
     }
     acf {
-      brief_background_color
+      header_background {
+        localFile {
+          url
+        }
+      }      
+      header_body
+      header_title
       portfolio_page_building_blocks_post {
           __typename
 
@@ -252,22 +217,23 @@ query($id: String!) {
               brief_side_text_left
               brief_text_color
               brief_bg_color
-
+              services_list
           }
 
           ... on WordPressAcf_padded_image {
             padded_image_background_color
+            padded_image_link
             padded_image_png {
               localFile {
                 url
               }
             }
-
           }
 
           ... on WordPressAcf_about_page_staff_grid {
             person {
               name
+              position
               headshot {
                 localFile {
                   url
@@ -278,9 +244,23 @@ query($id: String!) {
 
             ... on WordPressAcf_pull_quote {
               pull_quote_text
+              pull_quote_title
               pull_quote_image
               pull_quote_bg_color
               pull_quote_text_color
+            }
+
+            ... on WordPressAcf_video_grid {
+              video_grid_core {
+                video_banner {
+                  localFile {
+                    url
+                  }
+                }
+                video_heading
+                video_text
+                video_url
+              }
             }
             ... on WordPressAcf_gallery {
             image_sliding_carousel {
@@ -310,6 +290,17 @@ query($id: String!) {
             }
           }
           
+          ... on WordPressAcf_next_post {
+            id
+            next_post_brief
+            next_post_title
+            next_post_img {
+              localFile {
+                url
+              }
+            }
+          }
+
         }
       }
     }

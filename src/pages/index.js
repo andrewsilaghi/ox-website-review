@@ -6,31 +6,57 @@ import Banner from "../components/video-ban"
 import CaseStudy from "../components/case-studies"
 import NavBar from "../components/nav"
 import Footer from "../components/footer"
-import VideoBanner from '../components/video-ban';
+import HomeVideoBanner from '../components/home-video-header';
+import Carousel from 'react-bootstrap/Carousel'
 import OxIntro from "../components/ox-intro"
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import client1 from '../../static/img/clients/nat-geo.png'
-import Carousel from 'react-bootstrap/Carousel'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(fab);
+
 
 
 export default ({data}) => (
   
     <div>
     <NavBar></NavBar>
-<VideoBanner videoBanner={data.homePageAcf.acf.video_banner_img.localFile.url} videoUrl={data.homePageAcf.acf.video_banner_url}></VideoBanner>
-<OxIntro></OxIntro>
+<HomeVideoBanner videoHeaderTitle={data.homePageAcf.acf.video_heading}  videoBanner={data.homePageAcf.acf.video_banner_img.localFile.url} videoUrl={data.homePageAcf.acf.video_banner_url}></HomeVideoBanner>
+<OxIntro leftColumn={data.homePageAcf.acf.intro_text_left_column} rightColumn={data.homePageAcf.acf.intro_text_right_column}></OxIntro>    
+    <section className="quote section--padding">
+    <div className="container text-center">
+    <h3 className="quote__heading lead">Our Work Has</h3>
+
+    <Carousel controls={false} indicators={true}>
+    {data.homePageAcf.acf.work_fact.map(({ our_work_fact }) => {
+      const ourWorkFact = our_work_fact
+      return (
+        <Carousel.Item>
+        <div className="col-md-8 offset-md-2 text-center">
+        <h2 className="serif quote__text">{ourWorkFact}</h2></div>
+        </Carousel.Item>               
+      )
+    })}
+    
+    </Carousel>
+    </div>
+    </section>
+ 
     <section className="section--padding bg-white">
-    <div className="container-fluid">
-    <div className="row">
-    <h2 className="vrtcl-txt ml-0 col-md-2">Our Clients</h2>
-        <div className="col-md-8">
+    <div className="container">
+        <div className="row">     
+        <div className="col-md-12">         
+        <h1 className="text-center client__heading lead">Our Partners</h1>   
+        </div>     
+        </div>
         <div className="row d-flex align-items-center">
         {data.homePageAcf.acf.our_clients.map(({ localFile }) => {
           const img = localFile.url
           return (
-            <div className="col-md-3 ">
+            <div className="col-md-2 client__logo-container px-0">
               <img
-                className="w-100 py-4 px-4"
+                className="w-100 py-4"
                 src={img}
                 alt="First slide"
               />
@@ -39,99 +65,73 @@ export default ({data}) => (
         })}
         </div>
         </div>
-    <h2 className="vrtcl-txt-90 mr-0 col-md-2">Our Clients</h2>
-    </div>
-    </div>
-    </section>
-    
-    <section className="quote section--padding">
-    <div className="container text-center">
-    <h3 className="quote__heading lead">Our Work Has</h3>
-    <h2 className="serif quote__text">...Generated over $1 Billion <br/>
-    in Contributions </h2>  
-    </div>
     </section>
     <section className="case-studies">
         <div className="container-fluid">
             <div className="row">
 
                 {data.postsQuery.edges.map(({ node }) => (
-                    <div className="col-md-12 case-studies__card d-flex align-items-end " style={{background: "url(" + node.featured_media.localFile.url + ")"+ "no-repeat center center" }}>
-                            <div className="col-md-8 col-sm-12 mb-5 case-study__info" >
-                                <h4 className="text-white serif">Case Study</h4>
-                                <h1 className="text-white font-weight-bold case-study__text" dangerouslySetInnerHTML={{ __html: node.acf.case_study_text_for_home_page }} />
-                            </div>
-
+                  <Link className="w-100" to={node.slug}>
+                    <div className="col-md-12 case-studies__card-video" style={{background: "url(" + node.featured_media.localFile.url + ")"+ "no-repeat center center" }}>
+                    <div class="overlay"></div>
+                    <video playsinline="playsinline" autoplay="autoplay" muted="muted" muted>
+                      <source src={node.acf.header_video_background_url.localFile.url} type="video/mp4"/>
+                    </video>
+                    <div class="container-fluid h-100">
+                      <div class="d-flex h-100 text-left align-items-end">
+                      <div className="col-md-8 col-sm-12 case-study__info" >        
+                      <h4 className="text-white serif">Case Study</h4>
+                      <h1 className="text-white font-weight-bold case-study__text" dangerouslySetInnerHTML={{ __html: node.acf.case_study_text_for_home_page }} /> 
+                        </div>
+                      </div>
                     </div>
-
+                  </div>
+                    </Link>
                 ))}
 
             </div>
         </div>
     </section>
     <section className="article">
+    <div className="container-fluid">
+    <div className="row">
+    {
 
-    
-    <div className="card-group">
-    <div className="card bg-dark text-white">
-    <img className="card-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80" alt="Card image" />
-    <div className="card-img-overlay">
-      <h5 className="card-title">Card title</h5>
-      <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      <p className="card-text">Last updated 3 mins ago</p>
+      data.homePageAcf.acf.medium_post.map(({ medium_post_image,medium_post_title,medium_post_url }) => {
+      const mediumBg = medium_post_image.localFile.url
+      const mediumTitle = medium_post_title
+      const mediumUrl = medium_post_url
+      return(
+      <div className="col-md-4 post px-0">
+      <div className="post__image" style={{background: "url(" + mediumBg + ")" + " no-repeat center center", backgroundSize: 'cover'}}>
+        <a target="_blank" href={mediumUrl} className="post__overlay d-flex flex-column justify-content-center text-center align-items-center">
+        <div className="post__container">
+          <h3 className="text-white serif">{mediumTitle}</h3> 
+        <div className="post__btn flex-row d-flex align-items-center">
+          <p className="read-more text-white my-0 ">Read more on </p>
+          <div className="meidum-icon"><FontAwesomeIcon icon={['fab', 'medium']} size="1x" color="#fff" /></div>
+        </div>
+        </div>
+        </a>
+      </div>
     </div>
-  </div>
-  <div className="card bg-dark text-white">
-  <img className="card-img" src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80" alt="Card image"/>
-  <div className="card-img-overlay">
-    <h5 className="card-title">Card title</h5>
-    <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    <p className="card-text">Last updated 3 mins ago</p>
-  </div>
-</div>
-<div className="card bg-dark text-white">
-<img className="card-img" src="https://images.unsplash.com/photo-1453785675141-67637e2d4b5c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2318&q=80" alt="Card image"/>
-<div className="card-img-overlay">
-  <h5 className="card-title">Card title</h5>
-  <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-  <p className="card-text">Last updated 3 mins ago</p>
-</div>
-</div>
-</div>
-    </section>
-    <section className="testimonials py-5">
-    <div className="container">
-    <div className="row serif">
-    <Carousel controls={false} indicators={false}>
-  <Carousel.Item>
-    <div className="col-md-8 offset-md-2 text-center">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel aliquam leo. Donec ultrices, ligula ut faucibus rhoncus, est arcu gravida dui, sagittis volutpat odio magna et erat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla quam nulla, suscipit eget tincidunt non, vulputate sed tellus.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel aliquam leo. Donec ultrices, ligula ut faucibus rhoncus, est arcu gravida dui, sagittis volutpat odio magna et erat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla quam nulla, suscipit eget tincidunt non, vulputate sed tellus.</p></div>
-    </Carousel.Item>
-    <Carousel.Item>
-    <div className="col-md-8 offset-md-2 text-center">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel aliquam leo. Donec ultrices, ligula ut faucibus rhoncus, est arcu gravida dui, sagittis volutpat odio magna et erat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla quam nulla, suscipit eget tincidunt non, vulputate sed tellus.</p></div>
-    </Carousel.Item>
-    <Carousel.Item>
-    <div className="col-md-8 offset-md-2 text-center">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel aliquam leo. Donec ultrices, ligula ut faucibus rhoncus, est arcu gravida dui, sagittis volutpat odio magna et erat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla quam nulla, suscipit eget tincidunt non, vulputate sed tellus.</p></div>        
-    </Carousel.Item>
-    </Carousel>
+    )
+    })}     
     </div>
     </div>
     </section>
-    <section className="call-to-action py-5">
-    <div className="container">
-    </div>
-    </section>
+  
+
     <Footer></Footer>
     </div>
 )
 export const pageQuery = graphql`
 
-  query postsQueryHomePage{
-    postsQuery: allWordpressPost {
+  query postsQueryHomePage {
+    postsQuery:   allWordpressPost(filter: {categories: {elemMatch: {name: {eq: "case-study"}}}}) {
         edges {
           node {
+            slug
             id
             excerpt
             content
@@ -143,6 +143,11 @@ export const pageQuery = graphql`
             }
             acf {
               case_study_text_for_home_page
+              header_video_background_url{
+                localFile{
+                  url
+                }
+              }
             }
           }
         }
@@ -155,12 +160,32 @@ export const pageQuery = graphql`
               url
             }
           }
+          work_fact {
+            our_work_fact
+          }
           video_banner_img {
             localFile {
               url
             }
           }
           video_banner_url
+          video_heading
+
+          intro_text_left_column
+          intro_text_right_column
+
+          medium_post {
+            medium_post_image{
+              localFile {
+                url
+              }
+            }
+            medium_post_title
+            medium_post_url
+          }
+          philosophy_video
+          
+
         }
       }
 }

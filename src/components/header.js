@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 
 
 export default ({bg, headerTitle, headerSubTitle}) => (
-  <div className="jumbotron jumbotron-fluid d-flex align-content-end flex-wrap header" style={{backgroundImage: `url(${bg})`}}>
+  <div className="jumbotron jumbotron-fluid d-flex align-content-end webkit-flex flex-wrap header" style={{background: `url(${bg}) no-repeat center center` }}>
   <div className="container">
   <div className="row">
     <div className="text-white">

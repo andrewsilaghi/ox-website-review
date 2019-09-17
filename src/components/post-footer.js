@@ -6,10 +6,11 @@ import Carousel from 'react-bootstrap/Carousel'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { Link } from "gatsby";
 library.add(fab);
 
 
-export default () => (
+export default ({nextCaseStudyPic, nextCaseStudyTitle, nextCaseStudyDesc, nextPostLink }) => (
 <div>
   <section className="testimonials py-5">
   <div className="container">
@@ -54,20 +55,27 @@ export default () => (
   </div>
   </div>
   </section>
-  <section className="call-to-action py-5">
-  <div className="container">
-  <div className="row">
-  <div className="d-flex cta__flex justify-content-start align-items-center">
-  <div className="col-md-9">
-  <div className="cta__container">
-  <h1 className="serif font-weight-bold text-white cta__heading">Let's get to work, together!</h1>
+  <section className="call-to-action">
+  <div className="container-fluid">
+  <div className="row cta__next-containers">
+  <div className="col-md-4 cta__next-exerpt d-flex  align-items-center">
+  <div className="mx-auto px-5 py-3">
+  <a href={nextPostLink} target="_blank">
+  <h3 className="text-white font-weight-bold  cta__next-exerpt__heading">{nextCaseStudyTitle}</h3>
+  <p className="text-white font-weight-medium">{nextCaseStudyDesc}</p>
+  </a>
   </div>
   </div>
+  <div className="col-md-4 cta__next-img"  style={{background: "url(" + nextCaseStudyPic + ")"+ "no-repeat center center" }}></div>
   <div className="col-md-4">
-  <button className="cta__button mx-4"> <a href="https://oxcreates.typeform.com/to/M4cMBe" target="_blank">Learn More</a> </button>
+  <div className="d-flex flex-column justify-content-start cta__text-container">
+  <div className="my-auto">
+  <h1 className="serif font-weight-bold text-white cta__heading cta__heading--alternate">Let's get to<br/> work, together!</h1>
+  <button className="cta__button"> <a href="https://oxcreates.typeform.com/to/M4cMBe" target="_blank">Learn More</a> </button>
   </div>
   </div>
   </div>
+</div>
 </div>
   </section>
 <footer className="footer footer--padding">
@@ -97,19 +105,19 @@ export default () => (
       <h4 className="text-uppercase list-header color-orange">Contact</h4>
         <ul className="list-unstyled footer-text">
           <li>
-            <a href="#!">contact@oxcreates.com</a>
+            <a href="mailto:contact@oxcreates.com">contact@oxcreates.com</a>
           </li>
           <li>
-            <a href="#!">(312) 945 6023</a>
+            <a href="tel:3129456023">(312) 945 6023</a>
           </li>
         </ul>
        <div className="pull-right text-right">
     <div class="center-block footer__social-strip">
     <br />
-      <a href="https://vimeo.com/oxcreates"><FontAwesomeIcon icon={['fab', 'vimeo-square']} size="2x" color="#ff4729" /></a>
-      <a href="https://dribbble.com/ox_creative"><FontAwesomeIcon icon={['fab', 'dribbble']} size="2x" color="#ff4729" /></a>
-      <a href="https://www.instagram.com/oxcreates/"><FontAwesomeIcon icon={['fab', 'instagram']} size="2x" color="#ff4729" /></a>
-      <a href="https://www.linkedin.com/company/j-oxford-studios/about/"><FontAwesomeIcon icon={['fab', 'linkedin']} size="2x"  color="#ff4729" /></a>
+    <a href="https://vimeo.com/oxcreates" target="_blank"><FontAwesomeIcon icon={['fab', 'vimeo-square']} size="2x" color="#ff4729" /></a>
+    <a href="https://dribbble.com/ox_creative" target="_blank"><FontAwesomeIcon icon={['fab', 'dribbble']} size="2x" color="#ff4729" /></a>
+    <a href="https://www.instagram.com/oxcreates/" target="_blank"><FontAwesomeIcon icon={['fab', 'instagram']} size="2x" color="#ff4729" /></a>
+    <a href="https://www.linkedin.com/company/j-oxford-studios/about/" target="_blank"><FontAwesomeIcon icon={['fab', 'linkedin']} size="2x"  color="#ff4729" /></a>
     </div>
         </div>
         </div>
